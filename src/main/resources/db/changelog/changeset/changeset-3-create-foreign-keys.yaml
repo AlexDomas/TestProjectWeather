@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-foreign-keys
+      author: AlexDomas
+      changes:
+        - addColumn:
+            tableName: weather
+            columns:
+              - column:
+                  name: location_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: weather
+            baseColumnNames: location_id
+            referencedTableName: location
+            referencedColumnNames: id
+            constraintName: weather_location_FK

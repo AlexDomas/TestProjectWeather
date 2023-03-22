@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-weather
+      author: AlexDomas
+      changes:
+        - createTable:
+            tableName: weather
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: temperature
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: wind_speed
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: atmosphere_pressure
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: air_humidity
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: weather_condition
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created
+                  type: timestamp
+                  constraints:
+                    nullable: false

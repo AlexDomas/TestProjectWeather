@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-location
+      author: AlexDomas
+      changes:
+        - createTable:
+            tableName: location
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: city
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created
+                  type: timestamp
+                  constraints:
+                    nullable: false
