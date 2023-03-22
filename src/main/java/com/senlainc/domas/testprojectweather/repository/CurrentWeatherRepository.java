@@ -10,12 +10,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.senlainc.domas.testprojectweather.constant.SQLConstant;
+
 public interface CurrentWeatherRepository extends JpaRepository<CurrentWeather, UUID> {
 
-    @Query(value = "SELECT * FROM weather ORDER BY created DESC LIMIT 1 ", nativeQuery = true)
+    @Query(value = SQLConstant.SELECT_LAST_WEATHER_SQL, nativeQuery = true)
     Optional<CurrentWeather> findLastWeather();
 
-    @Query(value = "SELECT * FROM   weather WHERE date BETWEEN :from AND :to", nativeQuery = true)
+    @Query(value = SQLConstant.SELECT_WEATHER_BETWEEN_DATES_SQL, nativeQuery = true)
     List<CurrentWeather> findAllByDateBetween(@Param(value = "from") LocalDate from, @Param(value = "to") LocalDate to);
 
 }

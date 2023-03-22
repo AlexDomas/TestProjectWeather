@@ -1,0 +1,33 @@
+version: "3.7"
+services:
+  test_project_weather_app:
+    build: .
+    image: "test-project-weather-app"
+    container_name: "test-project-weather-app"
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    environment:
+      DB_USERNAME: postgres
+      DB_PASSWORD: admin
+      DB_URL: jdbc:postgresql://test_project_weather_app_db:5432/weather
+    volumes:
+      - ./logs/:/var/app.log
+
+  test_project_weather_app_db:
+    image: postgres:12
+    container_name: "test_project_weather_app_db"
+    restart: on-failure
+    user: root
+    ports:
+      - "5416:5432"
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: postgres
+      POSTGRES_DB: weather
+      POSTGRES_HOST_AUTH_METHOD: trust
+    #volumes:
+    #  - ./data/logs/postgresql:/var/lib/postgresql/data
+
+
+
