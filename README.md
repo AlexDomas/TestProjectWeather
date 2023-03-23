@@ -7,6 +7,10 @@
 2. Starting in docker container: set (spring.profiles.active=container) in application.properties 
 and go to the root project directory, compile jar-file with the help of maven command (mvn clean, mvn package -Dmaven.test.skip), call terminal and perform (docker compose up). 
 
+### Swagger
+
+http://localhost:8080/swagger-ui.html#/weather45rest45controller
+
 ### Endpoints
 
 First EndPoint
