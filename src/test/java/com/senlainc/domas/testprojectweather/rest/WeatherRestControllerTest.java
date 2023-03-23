@@ -26,22 +26,21 @@ public class WeatherRestControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    public void getWeather() throws Exception {
+    public void getWeather_CheckingForGettingLastWeather_ShouldReturnStatusOK() throws Exception {
         this.mockMvc.perform(get("/api/v1/weather/last-weather"))
                 .andDo(print())
                 .andExpect(status().isOk());
-
     }
 
     @Test
-    public void getDateBetween1() throws Exception {
+    public void getDateBetween_CheckingForGettingAverageValuesBetweenDates_ShouldReturnNotFoundStatus() throws Exception {
         this.mockMvc.perform(get("/api/v1/weather/between-date").param("from", "23-02-2023").param("to", "23-02-2023"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    public void getDateBetween2() throws Exception {
+    public void getDateBetween_CheckingForGettingAverageValuesBetweenDates_ShouldReturnStatusOK() throws Exception {
         this.mockMvc.perform(get("/api/v1/weather/between-date").param("from", "23-03-2023").param("to", "23-03-2023"))
                 .andDo(print())
                 .andExpect(status().isOk());
