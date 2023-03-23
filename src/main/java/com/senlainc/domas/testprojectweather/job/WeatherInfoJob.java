@@ -15,7 +15,7 @@ public class WeatherInfoJob {
     private WeatherService weatherService;
 
     @Scheduled(fixedRate = 100000L)
-    public void saveDataAboutWeather(){
+    public void saveDataAboutWeather() {
         weatherService.saveWeatherInfo(city);
     }
 
@@ -23,4 +23,5 @@ public class WeatherInfoJob {
     public void setWeatherService(WeatherService weatherService) {
         this.weatherService = weatherService;
     }
+
 }

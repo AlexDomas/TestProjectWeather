@@ -5,7 +5,7 @@ import com.senlainc.domas.testprojectweather.dto.AverageWeatherDataDto;
 import com.senlainc.domas.testprojectweather.dto.WeatherInfoResponseDto;
 import com.senlainc.domas.testprojectweather.entity.CurrentWeather;
 import com.senlainc.domas.testprojectweather.exception.CityNotFoundException;
-import com.senlainc.domas.testprojectweather.exception.NoDataWeatherException;
+import com.senlainc.domas.testprojectweather.exception.NoWeatherDataBetweenDatesException;
 import com.senlainc.domas.testprojectweather.mapper.WeatherMapper;
 import com.senlainc.domas.testprojectweather.repository.CurrentWeatherRepository;
 import com.senlainc.domas.testprojectweather.service.WeatherService;
@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import com.senlainc.domas.testprojectweather.constant.MessageExceptionConstant;
 
 @Slf4j
 @Service
@@ -30,7 +32,7 @@ public class WeatherServiceImpl implements WeatherService {
         ResponseEntity<WeatherInfoResponseDto> response = weatherClient.getWeatherInfo(city);
 
         if (response.getStatusCode().equals(HttpStatus.BAD_REQUEST)) {
-            throw new CityNotFoundException("City not found " + city);
+            throw new CityNotFoundException(MessageExceptionConstant.CITY_NOT_FOUND_EXCEPTION_MESSAGE + city);
         }
 
         if (response.getStatusCode().equals(HttpStatus.OK) && response.getBody() != null) {
@@ -43,15 +45,18 @@ public class WeatherServiceImpl implements WeatherService {
 
     @Override
     public CurrentWeather getLastWeather() {
-        return currentWeatherRepository.findLastWeather().orElseThrow(() -> new NoDataWeatherException("Couldn't find last weather"));
+        return currentWeatherRepository
+                .findLastWeather()
+                .orElseThrow(() -> new NoWeatherDataBetweenDatesException(MessageExceptionConstant.LAST_WEATHER_NOT_FOUND_EXCEPTION_MESSAGE));
     }
 
     @Override
-    public void getAverageParametersBetweenDates(AverageWeatherDataDto averageWeatherDataDto, LocalDate from, LocalDate to){
+    public void getAverageParametersBetweenDates(AverageWeatherDataDto averageWeatherDataDto, LocalDate from, LocalDate to) {
         List<CurrentWeather> listOfWeathers = currentWeatherRepository.findAllByDateBetween(from, to);
 
-        if(listOfWeathers.size() == 0){
-            throw new NoDataWeatherException("No data about weather between (" + from + ", " + to + ")");
+        if (listOfWeathers.size() == 0) {
+            throw new NoWeatherDataBetweenDatesException(MessageExceptionConstant.NO_WEATHER_DATA_BETWEEN_DATES_EXCEPTION_MESSAGE
+                    + "(" + from + ", " + to + ")");
         }
 
         double averageTemp = 0.0;
@@ -61,14 +66,14 @@ public class WeatherServiceImpl implements WeatherService {
 
         int sizeOfList = listOfWeathers.size();
 
-        for(CurrentWeather currentWeather: listOfWeathers){
+        for (CurrentWeather currentWeather : listOfWeathers) {
             averageTemp += currentWeather.getTemperature();
             averageAtmospherePressure += currentWeather.getAtmospherePressure();
             averageWindSpeed += currentWeather.getWindSpeed();
             averageAirHumidity += currentWeather.getAirHumidity();
         }
 
-        averageWeatherDataDto.setAverageTemperature(averageTemp/ sizeOfList);
+        averageWeatherDataDto.setAverageTemperature(averageTemp / sizeOfList);
         averageWeatherDataDto.setWindSpeed(averageWindSpeed / sizeOfList);
         averageWeatherDataDto.setAtmospherePressure(averageAtmospherePressure / sizeOfList);
         averageWeatherDataDto.setAirHumidity(averageAirHumidity / sizeOfList);

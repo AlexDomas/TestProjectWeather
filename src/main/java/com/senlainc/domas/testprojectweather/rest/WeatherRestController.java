@@ -39,9 +39,9 @@ public class WeatherRestController {
     @ApiOperation(value = "Api for getting average parameters of weather from DB in certain period")
     @ApiResponse(code = 200, response = AverageWeatherDataDto.class, message = "OK")
     @GetMapping(value = "/between-date")
-    public ResponseEntity<AverageWeatherDataDto> getDateBetween(@ApiParam(name="from", value = "27-03-2023")
+    public ResponseEntity<AverageWeatherDataDto> getDateBetween(@ApiParam(name = "from", value = "27-03-2023")
                                                                 @RequestParam(value = "from") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate from,
-                                                                @ApiParam(name="to", value = "27-03-2023")
+                                                                @ApiParam(name = "to", value = "27-03-2023")
                                                                 @RequestParam(value = "to") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate to) {
         AverageWeatherDataDto averageWeatherDataDto = new AverageWeatherDataDto();
         weatherService.getAverageParametersBetweenDates(averageWeatherDataDto, from, to);

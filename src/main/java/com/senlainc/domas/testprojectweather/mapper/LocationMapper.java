@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class LocationMapper {
 
-    public Location mapToLocation(LocationResponseDto locationResponseDto){
-        return locationResponseDto != null ?  new Location(locationResponseDto.getCityName()) : null;
+    public Location mapToLocation(LocationResponseDto locationResponseDto) {
+        return locationResponseDto != null ? new Location(locationResponseDto.getCityName()) : null;
     }
 
 }

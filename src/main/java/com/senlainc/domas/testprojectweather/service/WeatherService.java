@@ -4,7 +4,6 @@ import com.senlainc.domas.testprojectweather.dto.AverageWeatherDataDto;
 import com.senlainc.domas.testprojectweather.entity.CurrentWeather;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public interface WeatherService {
 
